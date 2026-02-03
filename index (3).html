@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 50px 20px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    section.active {
+      display: flex;
+    }
+
+    .card {
+      background: white;
+      color: #222;
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      background: #e63946;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 30px;
+      font-size: 18px;
+      margin-top: 25px;
+      cursor: pointer;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+
+    /* Fake NO button */
+    #noBtn {
+      background: #6c757d;
+      position: absolute;
+    }
+
+    #yesMsg {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #6a040f;
+    }
+
+    /* Floating Hearts */
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      color: rgba(255, 0, 100, 0.7);
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Floating Hearts -->
+<div class="hearts" id="hearts"></div>
+
+<!-- Romantic Song -->
+<audio id="song" src="Until_I_Found_You.mp3" loop></audio>
+
+<!-- 1️⃣ WELCOME -->
+<section class="active">
+  <div class="card">
+    <h2>My cute panda❤️</h2>
+    <p>I made something special just for you…  
+       please read this slowly 🥹</p>
+    <button onclick="next()">Next 💌</button>
+  </div>
+</section>
+
+<!-- 2️⃣ STORY -->
+<section>
+  <div class="card">
+    <h2>Our Story 💕</h2>
+    <p>
+    I miss you everyday
+      Distance never mattered,<br>
+      because my heart chose you<br>
+      every single day 💖
+     
+    </p>
+    <button onclick="next()">Next ✨</button>
+  </div>
+</section>
+
+<!-- 3️⃣ WHY YOU -->
+<section>
+  <div class="card">
+    <h2>Why It’s You 💘</h2>
+    <p>
+    You make me happy.you are everything i dream of.You take care for me.You undersatnd me.
+      You feel like forever 🥹 I love youuuuuu alot
+    </p>
+    <button onclick="next()">Memories 📸</button>
+  </div>
+</section>
+
+<!-- 4️⃣ MEMORIES -->
+<section>
+  <div class="card">
+    <h2>Our Memories 🎥💖</h2>
+
+    <video src="1.mp4" controls muted playsinline></video>
+    <video src="2.mp4" controls muted playsinline></video>
+    <video src="3.mp4" controls muted playsinline></video>
+    <video src="4.mp4" controls muted playsinline></video>
+
+    <p>
+      Every moment with you<br>
+      lives forever in my heart 🥹💕
+    </p>
+
+    <button onclick="next()">One Last Thing 💗</button>
+  </div>
+</section>
+
+<!-- 5️⃣ VALENTINE -->
+<section>
+  <div class="card" style="position:relative">
+    <h2>So my love… 🌹</h2>
+    <h1>Will you be my Valentine? ❤️</h1>
+
+    <button onclick="yes()">YES, ALWAYS 💖</button>
+    <button id="noBtn" onmouseover="moveNo()">NO 🙄</button>
+
+    <div id="yesMsg">
+      🥰 I knew it!  
+      <br><br>
+      You are my today,  
+      my tomorrow,  
+      and every Valentine after this 💕✨
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Page navigation */
+  let current = 0;
+  const sections = document.querySelectorAll("section");
+
+  function next() {
+    sections[current].classList.remove("active");
+    current++;
+    sections[current].classList.add("active");
+  }
+
+  /* Fake NO button */
+  function moveNo() {
+    const btn = document.getElementById("noBtn");
+    btn.style.left = Math.random() * 200 + "px";
+    btn.style.top = Math.random() * 150 + "px";
+  }
+
+  /* YES button */
+  function yes() {
+    document.getElementById("yesMsg").style.display = "block";
+    const song = document.getElementById("song");
+    song.volume = 0.3;
+    song.play();
+  }
+
+  /* Floating hearts generator */
+  const heartsContainer = document.getElementById("hearts");
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (16 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+    heartsContainer.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 7000);
+  }
+
+  setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
